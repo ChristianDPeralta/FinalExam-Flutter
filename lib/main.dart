@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
-import 'homepage_FTL.dart'; 
+import 'homepage_FTL.dart';
+import 'registration_page.dart';
+
 
 void main() {
   runApp(MaterialApp(
-    
     theme: ThemeData(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.green,
-    appBarTheme: AppBarTheme(
-    backgroundColor: Colors.black38,
-    foregroundColor: const Color.fromARGB(255, 1, 18, 26),
-    ),
-    textTheme:  TextTheme(
-      bodyMedium: TextStyle(
-        fontSize: 18,
-        color: Colors.yellow,
+      brightness: Brightness.dark,
+      primarySwatch: Colors.green,
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.black38,
+        foregroundColor: const Color.fromARGB(255, 1, 18, 26),
+      ),
+      textTheme:  TextTheme(
+        bodyMedium: TextStyle(
+          fontSize: 18,
+          color: Colors.yellow,
+        )
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style:ElevatedButton.styleFrom(
+          backgroundColor: Colors.blue,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        )
       )
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style:ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      )
-    )
-    ),
-
     home: Scaffold(
       appBar: AppBar(
         title: Text('Flutter Demo'),
-     
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: LoginForm(), // Inserted StatefulWidget here
+        child: LoginForm(),
       ),
     ),
   ));
@@ -52,21 +51,23 @@ class _LoginFormState extends State<LoginForm> {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    // Simple validation
     if (username.isNotEmpty && password.isNotEmpty) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Login Successful!')),
-
-        Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePage_FTL()),
-
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter both username and password.')),
       );
     }
+  }
+
+  void _goToRegister() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegistrationPage()),
+    );
   }
 
   @override
@@ -95,11 +96,12 @@ class _LoginFormState extends State<LoginForm> {
           onPressed: _handleLogin,
           child: Text('Login'),
         ),
-
+        TextButton(
+          onPressed: _goToRegister,
+          child: Text('Don\'t have an account? Register here'),
+        ),
         Icon(Icons.home, size: 50, color: Colors.blue)
       ],
     );
-
-    
   }
 }
